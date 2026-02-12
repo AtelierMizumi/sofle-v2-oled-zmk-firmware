@@ -96,7 +96,7 @@
 &td_esc    &kp N1       &kp N2      &kp N3      &kp N4       &kp N5                           &kp N6     &kp N7       &kp N8      &kp N9      &kp N0          &kp DEL
 &kp TAB    &kp Q        &kp W       &kp E       &kp R        &kp T                            &kp Y      &kp U        &kp I       &kp O       &kp P           &kp BSLH
 &kp ESC    &hm LCTRL A  &hm LALT S  &hm LGUI D  &hm LSHFT F  &kp G                            &kp H      &hm RSHFT J  &hm RGUI K  &hm RALT L  &hm RCTRL SEMI  &kp SQT
-&kp LSHFT  &kp Z        &kp X       &kp C       &kp V        &kp B    &kp C_MUTE    &kp C_PP  &kp N      &kp M        &kp COMMA   &kp DOT     &td_slash       &kp RSHFT
+&kp LSHFT  &kp Z        &kp X       &kp C       &kp V        &kp B    &kp C_MUTE    &kp C_PP  &kp N      &kp M        &kp COMMA   &kp DOT     &td_slash       &mo 3
                         &kp MINUS   &kp EQUAL   &kp LALT     &mo SYM  &kp SPACE     &kp BSPC  &kp ENTER  &mo NAV      &kp LBKT    &kp RBKT
             >;
 
