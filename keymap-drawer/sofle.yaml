@@ -1,7 +1,7 @@
 layout: {zmk_keyboard: sofle}
 layers:
   BASE:
-  - '`'
+  - '&td_esc'
   - '1'
   - '2'
   - '3'
@@ -123,13 +123,13 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   NAV:
-  - BT CLR
-  - {t: BT, h: '0'}
-  - {t: BT, h: '1'}
-  - {t: BT, h: '2'}
-  - {t: BT, h: '3'}
-  - {t: BT, h: '4'}
   - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - PAGE UP
   - ''
   - ''
   - ''
@@ -141,9 +141,9 @@ layers:
   - CMENU
   - ''
   - ''
-  - PG UP
+  - PAGE DOWN
   - HOME
-  - UP
+  - ''
   - END
   - ''
   - ''
@@ -153,9 +153,9 @@ layers:
   - LGUI
   - LSHFT
   - ''
-  - PG DN
   - LEFT
   - DOWN
+  - UP ARROW
   - RIGHT
   - DEL
   - BSPC
