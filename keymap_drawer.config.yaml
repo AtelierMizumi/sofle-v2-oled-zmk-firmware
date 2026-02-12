@@ -1,0 +1,21 @@
+parse_config:
+  zmk_keycode_map:
+    # Map tap-dance behaviors to readable labels
+    td_esc: "ESC"
+    td_slash: "/"
+    td_esc ESCAPE: "ESC"
+    td_esc GRAVE: "`"
+    td_slash FSLH: "/"
+    td_slash BSLH: "\\"
+  
+  zmk_combos:
+    # Display combo for ESC
+    - p: [19, 20]
+      k: ESC
+      l: [BASE]
+
+draw_config:
+  key_w: 52
+  key_h: 52
+  split: true
+  use_local_layout: false
