@@ -5,6 +5,8 @@ manifest:
     # support nice_oled and nice_epaper
     - name: mctechnology17
       url-base: https://github.com/mctechnology17
+    - name: ateliermizumi
+      url-base: https://github.com/AtelierMizumi
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -12,7 +14,10 @@ manifest:
       import: app/west.yml
     # support nice_oled and nice_epaper
     - name: zmk-nice-oled
-      remote: mctechnology17
+      remote: ateliermizumi
+      revision: main
+    - name: hammerbeam-slideshow
+      remote: ateliermizumi
       revision: main
   self:
     path: config
