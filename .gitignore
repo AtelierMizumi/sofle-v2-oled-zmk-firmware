@@ -1,0 +1,6 @@
+tools/hammerbeam_output/
+.west/
+build/
+firmware/
+*.uf2
+zephyr-sdk.tar.xz
