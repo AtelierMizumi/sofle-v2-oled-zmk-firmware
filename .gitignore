@@ -4,3 +4,6 @@ build/
 firmware/
 *.uf2
 zephyr-sdk.tar.xz
+modules/
+zephyr/
+zmk/
