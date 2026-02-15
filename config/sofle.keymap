@@ -49,99 +49,10 @@
 
         // PRODUCTIVITY SHORTCUTS ONLY - No modifier combos!
         // Copy/Paste
-
-        combo_copy {
-            timeout-ms = <50>;
-            key-positions = <18 19>; // J + K
-            bindings = <&kp LC(C)>;
-            layers = <0>;
-        };
-
-        combo_paste {
-            timeout-ms = <50>;
-            key-positions = <17 18>; // H + J  
-            bindings = <&kp LC(V)>;
-            layers = <0>;
-        };
-
-        combo_cut {
-            timeout-ms = <50>;
-            key-positions = <27 28>; // X + C
-            bindings = <&kp LC(X)>;
-            layers = <0>;
-        };
-
         // Undo/Redo
-
-        combo_undo {
-            timeout-ms = <50>;
-            key-positions = <26 27>; // Z + X
-            bindings = <&kp LC(Z)>;
-            layers = <0>;
-        };
-
-        combo_redo {
-            timeout-ms = <50>;
-            key-positions = <28 29>; // C + V
-            bindings = <&kp LC(Y)>;
-            layers = <0>;
-        };
-
         // File operations
-
-        combo_save {
-            timeout-ms = <50>;
-            key-positions = <15 16>; // S + D
-            bindings = <&kp LC(S)>;
-            layers = <0>;
-        };
-
         // Browser specific
-
-        combo_new_tab {
-            timeout-ms = <50>;
-            key-positions = <4 5>; // R + T
-            bindings = <&kp LC(T)>;
-            layers = <0>;
-        };
-
-        combo_close_tab {
-            timeout-ms = <50>;
-            key-positions = <2 3>; // W + E
-            bindings = <&kp LC(W)>;
-            layers = <0>;
-        };
-
-        combo_reopen_tab {
-            timeout-ms = <50>;
-            key-positions = <5 6>; // T + Y
-            bindings = <&kp LC(LS(T))>;
-            layers = <0>;
-        };
-
-        combo_address_bar {
-            timeout-ms = <50>;
-            key-positions = <19 20>; // K + L
-            bindings = <&kp LC(L)>;
-            layers = <0>;
-        };
-
         // Navigation
-
-        combo_esc {
-            timeout-ms = <50>;
-            key-positions = <1 2>; // 1 + 2
-            bindings = <&kp ESC>;
-            layers = <0 1 2>;
-        };
-
-        combo_bspc {
-            timeout-ms = <50>;
-            key-positions = <9 10>; // 9 + 0
-            bindings = <&kp BSPC>;
-            layers = <0 1 2>;
-        };
-
         // KDE specific - Super+W
         // Capslock
     };
