@@ -50,12 +50,12 @@ layers:
   - COMMA
   - DOT
   - '&td_slash'
-  - RSHFT
+  - {t: GAME, h: toggle}
   - MINUS
   - EQUAL
   - LGUI
   - SYM
-  - SPACE
+  - {t: SPACE, h: LCTRL}
   - {t: BACKSPACE, h: RCTRL}
   - NAV
   - {t: ENTER, h: RALT}
@@ -244,3 +244,64 @@ layers:
   - ''
   - ''
   - ''
+  GAME:
+  - ESC
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - DEL
+  - TAB
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - BSLH
+  - LALT
+  - A
+  - S
+  - D
+  - F
+  - G
+  - H
+  - J
+  - K
+  - L
+  - SEMI
+  - SQT
+  - LSHFT
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - MUTE
+  - PP
+  - N
+  - M
+  - COMMA
+  - DOT
+  - FSLH
+  - {t: BASE, h: toggle}
+  - MINUS
+  - EQUAL
+  - LGUI
+  - LALT
+  - SPACE
+  - BACKSPACE
+  - ''
+  - ENTER
+  - LBKT
+  - RBKT
