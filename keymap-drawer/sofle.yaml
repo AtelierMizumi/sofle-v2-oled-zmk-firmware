@@ -294,11 +294,72 @@ layers:
   - COMMA
   - DOT
   - FSLH
-  - {t: BASE, h: toggle}
+  - {t: FIGHT, h: toggle}
   - MINUS
   - EQUAL
   - LGUI
   - LALT
+  - SPACE
+  - BACKSPACE
+  - ''
+  - ENTER
+  - LBKT
+  - RBKT
+  FIGHT:
+  - ESC
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - DEL
+  - TAB
+  - Q
+  - W
+  - E
+  - U
+  - I
+  - KP 4
+  - KP 5
+  - UP
+  - O
+  - P
+  - BSLH
+  - LALT
+  - A
+  - S
+  - D
+  - J
+  - K
+  - KP 1
+  - LEFT
+  - DOWN
+  - RIGHT
+  - SEMI
+  - SQT
+  - LSHFT
+  - Z
+  - X
+  - C
+  - O
+  - L
+  - MUTE
+  - PP
+  - KP 2
+  - KP 3
+  - KP 6
+  - DOT
+  - FSLH
+  - {t: BASE, h: toggle}
+  - MINUS
+  - EQUAL
+  - LGUI
+  - {t: ▽, type: trans}
   - SPACE
   - BACKSPACE
   - ''
