@@ -17,6 +17,7 @@
 #define FIGHT 5
 
 &left_encoder { resolution = <1>; };
+
 &right_encoder { resolution = <1>; };
 
 / {
@@ -49,6 +50,7 @@
         };
 
         // CUSTOM THUMB BEHAVIORS FOR FAST TYPING
+
         mt_space: mod_tap_space {
             compatible = "zmk,behavior-hold-tap";
             label = "MOD_TAP_SPACE";
@@ -120,11 +122,11 @@
             // • RT=Ctrl+T, WE=Ctrl+W, KL=Ctrl+L
 
             bindings = <
-&td_esc    &kp N1  &kp N2     &kp N3     &kp N4    &kp N5                                     &kp N6  &kp N7          &kp N8     &kp N9    &kp N0     &kp DEL
-&kp TAB    &kp Q   &kp W      &kp E      &kp R     &kp T                                      &kp Y   &kp U           &kp I      &kp O     &kp P      &kp BSLH
-&kp LALT   &kp A   &kp S      &kp D      &kp F     &kp G                                      &kp H   &kp J           &kp K      &kp L     &kp SEMI   &kp SQT
-&kp LSHFT  &kp Z   &kp X      &kp C      &kp V     &kp B   &kp C_MUTE    &kp C_PP             &kp N   &kp M           &kp COMMA  &kp DOT   &td_slash  &to GAME
-                   &kp MINUS  &kp EQUAL  &kp LGUI  &mo 1   &mt_space LCTRL SPACE &mt_bksp RCTRL BACKSPACE &mo 2 &mt_ent RALT ENTER  &kp LBKT   &kp RBKT
+&td_esc    &kp N1  &kp N2     &kp N3     &kp N4    &kp N5                                                     &kp N6  &kp N7              &kp N8     &kp N9    &kp N0     &kp DEL
+&kp TAB    &kp Q   &kp W      &kp E      &kp R     &kp T                                                      &kp Y   &kp U               &kp I      &kp O     &kp P      &kp BSLH
+&kp LALT   &kp A   &kp S      &kp D      &kp F     &kp G                                                      &kp H   &kp J               &kp K      &kp L     &kp SEMI   &kp SQT
+&kp LSHFT  &kp Z   &kp X      &kp C      &kp V     &kp B   &kp C_MUTE               &kp C_PP                  &kp N   &kp M               &kp COMMA  &kp DOT   &td_slash  &to 4
+                   &kp MINUS  &kp EQUAL  &kp LGUI  &mo 1   &mt_space LCTRL SPACE    &mt_bksp RCTRL BACKSPACE  &mo 2   &mt_ent RALT ENTER  &kp LBKT   &kp RBKT
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -170,11 +172,11 @@
         game_layer {
             label = "GAME";
             bindings = <
-&kp ESC    &kp N1  &kp N2     &kp N3     &kp N4    &kp N5                                     &kp N6  &kp N7          &kp N8     &kp N9    &kp N0     &kp DEL
-&kp TAB    &kp Q   &kp W      &kp E      &kp R     &kp T                                      &kp Y   &kp U           &kp I      &kp O     &kp P      &kp BSLH
-&kp LALT   &kp A   &kp S      &kp D      &kp F     &kp G                                      &kp H   &kp J           &kp K      &kp L     &kp SEMI   &kp SQT
-&kp LSHFT  &kp Z   &kp X      &kp C      &kp V     &kp B   &kp C_MUTE    &kp C_PP             &kp N   &kp M           &kp COMMA  &kp DOT   &kp FSLH   &to FIGHT
-                   &kp MINUS  &kp EQUAL  &kp LGUI  &kp LALT &kp SPACE    &kp BACKSPACE        &none   &kp ENTER       &kp LBKT   &kp RBKT
+&kp ESC           &kp N1  &kp N2     &kp N3     &kp N4    &kp N5                                 &kp N6  &kp N7     &kp N8     &kp N9    &kp N0    &kp DEL
+&kp TAB           &kp Q   &kp W      &kp E      &kp R     &kp T                                  &kp Y   &kp U      &kp I      &kp O     &kp P     &kp BSLH
+&kp LEFT_CONTROL  &kp A   &kp S      &kp D      &kp F     &kp G                                  &kp H   &kp J      &kp K      &kp L     &kp SEMI  &kp SQT
+&kp LSHFT         &kp Z   &kp X      &kp C      &kp V     &kp B     &kp C_MUTE    &kp C_PP       &kp N   &kp M      &kp COMMA  &kp DOT   &kp FSLH  &to 5
+                          &kp MINUS  &kp EQUAL  &kp LGUI  &kp LALT  &kp SPACE     &kp BACKSPACE  &none   &kp ENTER  &kp LBKT   &kp RBKT
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -182,18 +184,19 @@
 
         fight_layer {
             label = "FIGHT";
+
             // P1: z,s,x,c -> A,W,S,D. d,f,g / e,r,t -> J,K,L / U,I,O.
             // P2: n,j,m,, -> LEFT,UP,DOWN,RIGHT. k,l,; / i,o,p -> KP1,2,3 / KP4,5,6.
+
             bindings = <
-&kp ESC    &kp N1  &kp N2     &kp N3     &kp N4    &kp N5                                     &kp N6     &kp N7     &kp N8     &kp N9     &kp N0     &kp DEL
-&kp TAB    &kp Q   &kp W      &kp U      &kp I     &kp O                                      &kp Y      &kp U      &kp KP_N4  &kp KP_N5  &kp KP_N6  &kp BSLH
-&kp LALT   &kp A   &kp W      &kp J      &kp K     &kp L                                      &kp H      &kp UP     &kp KP_N1  &kp KP_N2  &kp KP_N3  &kp SQT
-&kp LSHFT  &kp A   &kp S      &kp D      &kp V     &kp B   &kp C_MUTE    &kp C_PP             &kp LEFT   &kp M      &kp DOWN   &kp RIGHT  &kp FSLH   &to BASE
-                   &kp MINUS  &kp EQUAL  &kp LGUI  &trans  &kp SPACE     &kp BACKSPACE        &none      &kp ENTER  &kp LBKT   &kp RBKT
+&kp ESC    &kp N1  &kp N2  &kp N3  &kp N4    &kp N5                               &kp N6    &kp N7          &kp N8     &kp N9     &kp N0     &kp DEL
+&kp TAB    &none   &none   &kp U   &kp I     &kp O                                &none     &none           &kp KP_N4  &kp KP_N5  &kp KP_N6  &kp BSLH
+&kp LALT   &none   &kp W   &kp J   &kp K     &kp L                                &none     &kp UP          &kp KP_N1  &kp KP_N2  &kp KP_N3  &kp SQT
+&kp LSHFT  &kp A   &kp S   &kp D   &none     &none   &kp C_MUTE    &kp C_PP       &kp LEFT  &kp DOWN_ARROW  &kp RIGHT  &none      &none      &to 0
+                   &none   &none   &kp LGUI  &trans  &kp SPACE     &kp BACKSPACE  &none     &none           &none      &none
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };
-
