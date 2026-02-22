@@ -32,7 +32,6 @@ jobs:
 
       - name: Draw keymaps
         id: draw
-        continue-on-error: true
         run: |
           get_args() {
               local keyboard=$2
