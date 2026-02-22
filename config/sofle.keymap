@@ -16,6 +16,9 @@
 #define GAME 4
 #define FIGHT 5
 
+&left_encoder { resolution = <1>; };
+&right_encoder { resolution = <1>; };
+
 / {
     conditional_layers {
         compatible = "zmk,conditional-layers";
