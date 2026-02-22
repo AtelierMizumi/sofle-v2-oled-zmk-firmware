@@ -1,6 +1,3 @@
-[submodule "hammerbeam-slideshow"]
-	path = hammerbeam-slideshow
-	url = https://github.com/AtelierMizumi/hammerbeam-slideshow
 [submodule "zmk-nice-oled"]
 	path = zmk-nice-oled
 	url = https://github.com/AtelierMizumi/zmk-nice-oled
