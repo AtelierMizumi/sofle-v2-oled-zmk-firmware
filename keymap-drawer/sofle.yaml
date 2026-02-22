@@ -24,19 +24,19 @@ layers:
   - I
   - O
   - P
-  - \
-  - ESC
-  - {t: A, h: LCTRL}
-  - {t: S, h: LALT}
-  - {t: D, h: LGUI}
-  - {t: F, h: LSHFT}
+  - BSLH
+  - LALT
+  - A
+  - S
+  - D
+  - F
   - G
   - H
-  - {t: J, h: RSHFT}
-  - {t: K, h: RGUI}
-  - {t: L, h: RALT}
-  - {t: ;, h: RCTRL}
-  - ''''
+  - J
+  - K
+  - L
+  - SEMI
+  - SQT
   - LSHFT
   - Z
   - X
@@ -47,20 +47,20 @@ layers:
   - PP
   - N
   - M
-  - ','
-  - .
+  - COMMA
+  - DOT
   - '&td_slash'
-  - RSHFT
-  - '-'
-  - '='
-  - LALT
+  - {t: GAME, h: toggle}
+  - MINUS
+  - EQUAL
+  - LGUI
   - SYM
-  - SPACE
-  - BSPC
-  - ENTER
+  - {t: SPACE, h: LCTRL}
+  - {t: BACKSPACE, h: RCTRL}
   - NAV
-  - '['
-  - ']'
+  - {t: ENTER, h: RALT}
+  - LBKT
+  - RBKT
   SYM:
   - F1
   - F2
@@ -74,19 +74,19 @@ layers:
   - F10
   - F11
   - F12
-  - '~'
-  - '!'
-  - '@'
-  - '#'
-  - $
-  - '%'
-  - ^
-  - '&'
-  - '*'
-  - (
-  - )
-  - '|'
-  - CAPS
+  - TILDE
+  - EXCL
+  - AT
+  - HASH
+  - DLLR
+  - PRCNT
+  - CARET
+  - AMPS
+  - STAR
+  - LPAR
+  - RPAR
+  - PIPE
+  - GRAVE
   - '1'
   - '2'
   - '3'
@@ -97,20 +97,20 @@ layers:
   - '8'
   - '9'
   - '0'
-  - _
+  - UNDER
   - {t: ▽, type: trans}
-  - '='
-  - '-'
-  - +
-  - '{'
-  - '}'
+  - EQUAL
+  - MINUS
+  - PLUS
+  - LBRC
+  - RBRC
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - '['
-  - ']'
-  - <
-  - '>'
-  - '?'
+  - LBKT
+  - RBKT
+  - LT
+  - GT
+  - QMARK
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -123,13 +123,13 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   NAV:
+  - BT CLR
+  - {t: BT, h: '0'}
+  - {t: BT, h: '1'}
+  - {t: BT, h: '2'}
+  - {t: BT, h: '3'}
+  - {t: BT, h: '4'}
   - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - PAGE UP
   - ''
   - ''
   - ''
@@ -141,9 +141,9 @@ layers:
   - CMENU
   - ''
   - ''
-  - PAGE DOWN
+  - PG UP
   - HOME
-  - ''
+  - UP
   - END
   - ''
   - ''
@@ -153,17 +153,17 @@ layers:
   - LGUI
   - LSHFT
   - ''
+  - PG DN
   - LEFT
   - DOWN
-  - UP ARROW
   - RIGHT
   - DEL
   - BSPC
   - {t: ▽, type: trans}
-  - UNDO
-  - CUT
-  - COPY
-  - PASTE
+  - Ctl+Z
+  - Ctl+X
+  - Ctl+C
+  - Ctl+V
   - ''
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -172,7 +172,6 @@ layers:
   - ''
   - ''
   - ''
-  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -181,6 +180,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {type: held}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   ADJUST:
@@ -195,7 +195,7 @@ layers:
   - ''
   - ''
   - ''
-  - ''
+  - '&sys_reset'
   - EP TOG
   - RGB HUD
   - RGB HUI
@@ -240,11 +240,129 @@ layers:
   - {type: held}
   - ''
   - ''
-  - ''
   - {type: held}
   - ''
   - ''
-combos:
-- p: [19, 20]
-  k: ESC
-  l: [BASE]
+  - ''
+  GAME:
+  - ESC
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - DEL
+  - TAB
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - BSLH
+  - LEFT CONTROL
+  - A
+  - S
+  - D
+  - F
+  - G
+  - H
+  - J
+  - K
+  - L
+  - SEMI
+  - SQT
+  - LSHFT
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - MUTE
+  - PP
+  - N
+  - M
+  - COMMA
+  - DOT
+  - FSLH
+  - {t: FIGHT, h: toggle}
+  - MINUS
+  - EQUAL
+  - LGUI
+  - LALT
+  - SPACE
+  - BACKSPACE
+  - ''
+  - ENTER
+  - LBKT
+  - RBKT
+  FIGHT:
+  - ESC
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - DEL
+  - TAB
+  - ''
+  - ''
+  - U
+  - I
+  - O
+  - ''
+  - ''
+  - KP 4
+  - KP 5
+  - KP 6
+  - BSLH
+  - LALT
+  - ''
+  - W
+  - J
+  - K
+  - L
+  - ''
+  - UP
+  - KP 1
+  - KP 2
+  - KP 3
+  - SQT
+  - LSHFT
+  - A
+  - S
+  - D
+  - ''
+  - ''
+  - MUTE
+  - PP
+  - LEFT
+  - DOWN ARROW
+  - RIGHT
+  - ''
+  - ''
+  - {t: BASE, h: toggle}
+  - ''
+  - ''
+  - LGUI
+  - {t: ▽, type: trans}
+  - SPACE
+  - BACKSPACE
+  - ''
+  - ''
+  - ''
+  - ''

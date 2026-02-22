@@ -1,23 +1,23 @@
-# Sofle V2 Wireless | ZMK Firmware
+# ⚡ Sofle V2 Wireless | ZMK Firmware
 
-> A beginner-friendly, smart keymap for the Sofle V2 split ergonomic keyboard, optimized for programming and typing workflows.
+> A deeply optimized, latency-free, and smart keymap for the Sofle V2 split ergonomic keyboard. Built for seamless programming, vim-style navigation, and local co-op gaming.
 
-[![Build](https://github.com/thuanc177/sofle-v2-oled-zmk-firmware/actions/workflows/build.yml/badge.svg)](https://github.com/thuanc177/sofle-v2-oled-zmk-firmware/actions/workflows/build.yml)
+[![Build](https://github.com/AtelierMizumi/sofle-v2-oled-zmk-firmware/actions/workflows/build.yml/badge.svg)](https://github.com/AtelierMizumi/sofle-v2-oled-zmk-firmware/actions/workflows/build.yml)
+[![Draw ZMK keymaps](https://github.com/AtelierMizumi/sofle-v2-oled-zmk-firmware/actions/workflows/keymap_drawer.yaml/badge.svg)](https://github.com/AtelierMizumi/sofle-v2-oled-zmk-firmware/actions/workflows/keymap_drawer.yaml)
 
 ---
 
-## Overview
+## 🌟 Overview
 
-This is a **ZMK firmware configuration** for the Sofle V2 split keyboard running on **nice!nano** controllers. It features a carefully designed 4-layer keymap with modern ergonomic improvements:
+This is a **highly tuned ZMK firmware configuration** for the Sofle V2 running on **nice!nano** controllers. It features an incredibly robust 5-layer keymap with modern ergonomic improvements and zero-delay hardware optimization.
 
-- **Home row mods** (CAGS order) for effortless modifier access
-- **Vim-style HJKL navigation** on the NAV layer
-- **Programming-optimized symbol placement** with numbers on home row
-- **Tap-dance behaviors** for frequently paired keys
-- **Thumb-centric layer switching** for natural hand positioning
-- **OLED display support** with custom widgets
-- **Dual rotary encoders** for volume and scroll control
-- **5 Bluetooth profiles** for multi-device switching
+- 🚀 **Home row mods** (CAGS order) for effortless modifier access without breaking stride.
+- 🧭 **Vim-style HJKL navigation** and quick clipboard shortcuts on the NAV layer.
+- 💻 **Programming-optimized** symbol placement with numbers directly on the home row.
+- ⚔️ **Dedicated GAME & FIGHT layers** for low-latency, zero-hold/delay physical gaming capabilities (including 2-player local split support).
+- 🎨 **OLED display support** with beautiful dynamic widgets (Luna & Bongo Cat).
+- 🖱️ **Optimized Rotary Encoders** manually configured to 1-detent hardware resolution for 1-to-1 lag-free scrolling.
+- 📡 **5 Bluetooth profiles** for seamless multi-device switching.
 
 ---
 
@@ -26,21 +26,22 @@ This is a **ZMK firmware configuration** for the Sofle V2 split keyboard running
 | Feature | Description |
 |---------|-------------|
 | **Controllers** | nice!nano v1/v2 (nRF52840) |
-| **Connectivity** | Bluetooth 5.0 with 5 profiles |
-| **Display** | 128x32 OLED (SSD1306) |
-| **Encoders** | 2x EC11 rotary encoders |
-| **Layers** | 4 layers (BASE, SYM, NAV, ADJUST) |
-| **Home Row Mods** | CAGS order with anti-misfire tuning |
-| **RGB Underglow** | Supported but disabled by default |
-| **Power Management** | Deep sleep, external power control |
+| **Displays** | 128x32 OLED (Luna/Bongo Cat Widgets) |
+| **Encoders** | 2x EC11 (1-to-1 Detent Resolution `<1>`) |
+| **Layers** | 5 layers (`BASE`, `SYM`, `NAV`, `GAME`, `FIGHT`, `ADJUST`) |
+| **Home Row Mods** | Tuned parameters (`require-prior-idle-ms`) |
 
 ---
 
-## Keymap Visualization
+## 🗺️ Keymap Layout
 
-![Keymap Layout](./keymap-drawer/sofle.svg)
+Below is the live, auto-generated keymap SVG from `keymap-drawer` workflow.
 
-**[Open in Keymap Editor →](https://nickcoutsos.github.io/keymap-editor)**
+<p align="center">
+  <img src="./keymap-drawer/sofle.svg" alt="Auto-generated Keymap Layout" width="100%">
+</p>
+
+> **[📝 Open in Keymap Editor](https://nickcoutsos.github.io/keymap-editor)**
 
 ---
 
@@ -95,7 +96,23 @@ Activated by **holding right thumb (NAV key)**. Vim-style arrows + clipboard sho
 
 ---
 
-### Layer 3: ADJUST (System Controls)
+### 🚀 Layer 3: GAME (Solo Action)
+
+A dedicated layer aimed entirely at FPS and action games. All hold-taps are stripped out, converting keys to 0-latency physical switches. 
+Pressing `Right Shift` toggles you into the `GAME` layer instantly, bypassing the standard typing experience that uses delay logic.
+
+### ⚔️ Layer 4: FIGHT (2-Player Co-op)
+
+Designed for intense local split-screen co-op (e.g. *Naruto vs Bleach* or *Flash Fighting Games*), mapped efficiently utilizing both halves distinctly.
+
+- **Player 1 (Left Half)**: Inverted-T Movement on `Z S X C`. Action buttons spanning `D F G` and `E R T`.
+- **Player 2 (Right Half)**: Inverted-T Movement on `N J M ,` (Arrows). Action buttons spanning `K L ;` and `I O P`.
+
+Press `Right Shift` repeatedly to cycle: `BASE` ➔ `GAME` ➔ `FIGHT` ➔ `BASE`.
+
+---
+
+### ⚙️ Layer 5: ADJUST (System Controls)
 
 **Conditionally activated** when holding **both SYM + NAV** simultaneously.
 
