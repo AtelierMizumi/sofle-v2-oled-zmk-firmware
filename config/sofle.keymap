@@ -14,6 +14,7 @@
 #define NAV 2
 #define ADJUST 3
 #define GAME 4
+#define FIGHT 5
 
 / {
     conditional_layers {
@@ -169,8 +170,23 @@
 &kp ESC    &kp N1  &kp N2     &kp N3     &kp N4    &kp N5                                     &kp N6  &kp N7          &kp N8     &kp N9    &kp N0     &kp DEL
 &kp TAB    &kp Q   &kp W      &kp E      &kp R     &kp T                                      &kp Y   &kp U           &kp I      &kp O     &kp P      &kp BSLH
 &kp LALT   &kp A   &kp S      &kp D      &kp F     &kp G                                      &kp H   &kp J           &kp K      &kp L     &kp SEMI   &kp SQT
-&kp LSHFT  &kp Z   &kp X      &kp C      &kp V     &kp B   &kp C_MUTE    &kp C_PP             &kp N   &kp M           &kp COMMA  &kp DOT   &kp FSLH   &to BASE
+&kp LSHFT  &kp Z   &kp X      &kp C      &kp V     &kp B   &kp C_MUTE    &kp C_PP             &kp N   &kp M           &kp COMMA  &kp DOT   &kp FSLH   &to FIGHT
                    &kp MINUS  &kp EQUAL  &kp LGUI  &kp LALT &kp SPACE    &kp BACKSPACE        &none   &kp ENTER       &kp LBKT   &kp RBKT
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        fight_layer {
+            label = "FIGHT";
+            // P1 (Left Half): WASD (Move). J,K,L,U,I,O mapped to right block: R->U, T->I, F->J, G->K, V->O, B->L
+            // P2 (Right Half): Arrows (Move). Numpad 1-6 mapped to left block: Y->KP4, U->KP5, H->KP1, N->KP2, M->KP3, ,->KP6
+            bindings = <
+&kp ESC    &kp N1  &kp N2     &kp N3     &kp N4    &kp N5                                     &kp N6     &kp N7     &kp N8     &kp N9     &kp N0     &kp DEL
+&kp TAB    &kp Q   &kp W      &kp E      &kp U     &kp I                                      &kp KP_N4  &kp KP_N5  &kp UP     &kp O      &kp P      &kp BSLH
+&kp LALT   &kp A   &kp S      &kp D      &kp J     &kp K                                      &kp KP_N1  &kp LEFT   &kp DOWN   &kp RIGHT  &kp SEMI   &kp SQT
+&kp LSHFT  &kp Z   &kp X      &kp C      &kp O     &kp L   &kp C_MUTE    &kp C_PP             &kp KP_N2  &kp KP_N3  &kp KP_N6  &kp DOT    &kp FSLH   &to BASE
+                   &kp MINUS  &kp EQUAL  &kp LGUI  &trans  &kp SPACE     &kp BACKSPACE        &none      &kp ENTER  &kp LBKT   &kp RBKT
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
