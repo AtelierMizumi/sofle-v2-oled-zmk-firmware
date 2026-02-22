@@ -321,39 +321,39 @@ layers:
   - TAB
   - Q
   - W
-  - E
   - U
   - I
+  - O
+  - Y
+  - U
   - KP 4
   - KP 5
-  - UP
-  - O
-  - P
+  - KP 6
   - BSLH
   - LALT
   - A
-  - S
-  - D
+  - W
   - J
   - K
-  - KP 1
-  - LEFT
-  - DOWN
-  - RIGHT
-  - SEMI
-  - SQT
-  - LSHFT
-  - Z
-  - X
-  - C
-  - O
   - L
-  - MUTE
-  - PP
+  - H
+  - UP
+  - KP 1
   - KP 2
   - KP 3
-  - KP 6
-  - DOT
+  - SQT
+  - LSHFT
+  - A
+  - S
+  - D
+  - V
+  - B
+  - MUTE
+  - PP
+  - LEFT
+  - M
+  - DOWN
+  - RIGHT
   - FSLH
   - {t: BASE, h: toggle}
   - MINUS
