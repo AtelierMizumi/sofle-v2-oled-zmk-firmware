@@ -1,23 +1,126 @@
-# Example for using the keymap-drawer ZMK user config workflow
 name: Draw ZMK keymaps
 on:
-  workflow_dispatch:  # can be triggered manually
-  push:               # automatically run on changes to following paths
+  workflow_dispatch:
+  push:
     paths:
       - "config/*.keymap"
       - "config/*.dtsi"
       - "keymap_drawer.config.yaml"
-      # - 'boards/*/*/*.keymap'
 
 jobs:
   draw:
-    uses: caksoylar/keymap-drawer/.github/workflows/draw-zmk.yml@main
+    runs-on: ubuntu-latest
     permissions:
-      contents: write  # allow workflow to commit to the repo
-    with:
-      keymap_patterns: "config/*.keymap"        # path to the keymaps to parse
-      config_path: "keymap_drawer.config.yaml"  # config file, ignored if not exists
-      output_folder: "keymap-drawer"            # path to save produced SVG and keymap YAML files
-      json_path: "config/"
-      parse_args: ""  # map of extra args to pass to `keymap parse`, e.g. "corne:'-l Def Lwr Rse' cradio:''"
-      draw_args: ""  # map of extra args to pass to `keymap draw`, e.g. "corne:'-k corne_rotated' cradio:'-k paroxysm'"
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: recursive
+
+      - name: Install keymap-drawer
+        run: pipx install keymap-drawer
+
+      - name: Install west
+        run: pipx install west
+
+      - name: Fetch west modules
+        run: |
+          west init -l config
+          west update --fetch-opt=--filter=tree:0
+
+      - name: Draw keymaps
+        id: draw
+        run: |
+          get_args() {
+              local keyboard=$2
+              local output=()
+
+              eval set -- "$1"
+              for arg; do
+                  local key=${arg%%:*}
+                  local val=${arg#*:}
+                  if [ "$key" = "$keyboard" ]; then
+                      output+=("$val")
+                      break
+                  fi
+              done
+              echo "${output[@]}"
+          }
+
+          check_for_layout_args() {
+              local args=("$@")
+
+              for val in "-j" "--qmk-info-json" "-k" "--qmk-keyboard" "-z" "--zmk-keyboard" "-d" "--dts-layout" "--ortho-layout" "-n" "--cols-thumbs-notation"; do
+                  for item in "${args[@]}"; do
+                      if [ "$val" = "$item" ]; then return 0; fi
+                  done
+              done
+
+              return 1
+          }
+
+          shopt -s nullglob extglob
+
+          artifacts=()
+          error_occurred=0
+          mkdir -p "keymap-drawer"
+
+          config_path="keymap_drawer.config.yaml"
+          [ -e "$config_path" ] && config_arg=(-c "$config_path") || config_arg=()
+          echo "INFO: using config args:" "${config_arg[@]}"
+
+          for keymap_file in config/*.keymap; do
+              keyboard=$(basename -s .keymap "$keymap_file")
+              echo "INFO: drawing for $keyboard"
+
+              IFS=" " read -r -a parse_args        <<< "$(get_args "" "$keyboard")"
+              echo "INFO:   got extra parse args:"       "${parse_args[@]}"
+              IFS=" " read -r -a draw_args         <<< "$(get_args "" "$keyboard")"
+              echo "INFO:   got extra draw args:"        "${draw_args[@]}"
+
+              json_path="config/"
+              if check_for_layout_args "${draw_args[@]}"; then
+                  echo "INFO:   found layout specifiers in draw args"
+              elif [ -n "$json_path" ] && [ -f "$json_path/${keyboard}.json" ]; then
+                  echo "INFO:   found $json_path/${keyboard}.json";
+                  draw_args+=(-j "$json_path/${keyboard}.json")
+              else
+                  dts_candidates=({,*/}boards/*/*/${keyboard}-layout{,s}.dtsi)
+                  if [ ${#dts_candidates[@]} -gt 0 ]; then
+                      echo "INFO:   found ${dts_candidates[0]}";
+                      draw_args+=(-d "${dts_candidates[0]}")
+                  fi
+              fi
+
+              tmp_yaml=$(mktemp)
+              tmp_svg=$(mktemp)
+
+              if keymap "${config_arg[@]}" parse -z "$keymap_file" "${parse_args[@]}" >"$tmp_yaml"; then
+                  mv "$tmp_yaml" "keymap-drawer/$keyboard.yaml"
+                  artifacts+=("keymap-drawer/$keyboard.yaml")
+              else
+                  echo "ERROR: parsing failed for $keyboard!"
+                  error_occurred=1
+                  continue
+              fi
+
+              if keymap "${config_arg[@]}" draw "keymap-drawer/$keyboard.yaml" "${draw_args[@]}" >"$tmp_svg"; then
+                  mv "$tmp_svg" "keymap-drawer/$keyboard.svg"
+                  artifacts+=("keymap-drawer/$keyboard.svg")
+              else
+                  echo "ERROR: drawing failed for $keyboard!"
+                  error_occurred=1
+              fi
+          done
+
+          if [ $error_occurred -eq 1 ]; then
+            exit 1
+          fi
+
+      - name: Commit updated images
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: keymap-drawer/*.svg keymap-drawer/*.yaml
+          commit_message: keymap-drawer render

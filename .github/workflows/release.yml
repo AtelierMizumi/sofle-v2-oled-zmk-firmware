@@ -1,0 +1,53 @@
+name: Release Firmware
+
+on:
+  workflow_run:
+    workflows: ["build.yml"]
+    types: [completed]
+    branches: [main, master]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download firmware artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: firmware
+          path: firmware/
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Get short SHA
+        id: sha
+        run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Create/Update Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest Build (${{ steps.date.outputs.date }} - ${{ steps.sha.outputs.sha }})
+          body: |
+            Latest firmware build from commit ${{ steps.sha.outputs.sha }}
+            
+            **Built on:** ${{ steps.date.outputs.date }}
+            **Commit:** ${{ github.event.workflow_run.head_sha }}
+            
+            ## Files included:
+            - `sofle_left_nice_oled.uf2` - Left half firmware
+            - `sofle_right_nice_oled.uf2` - Right half firmware  
+            - `settings_reset-nice_nano_v2-zmk.uf2` - Settings reset
+          files: firmware/*.uf2
+          draft: false
+          prerelease: false
