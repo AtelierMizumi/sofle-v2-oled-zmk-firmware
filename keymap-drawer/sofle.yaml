@@ -269,7 +269,7 @@ layers:
   - O
   - P
   - BSLH
-  - LALT
+  - LEFT CONTROL
   - A
   - S
   - D
@@ -319,24 +319,24 @@ layers:
   - '0'
   - DEL
   - TAB
-  - Q
-  - W
+  - ''
+  - ''
   - U
   - I
   - O
-  - Y
-  - U
+  - ''
+  - ''
   - KP 4
   - KP 5
   - KP 6
   - BSLH
   - LALT
-  - A
+  - ''
   - W
   - J
   - K
   - L
-  - H
+  - ''
   - UP
   - KP 1
   - KP 2
@@ -346,23 +346,23 @@ layers:
   - A
   - S
   - D
-  - V
-  - B
+  - ''
+  - ''
   - MUTE
   - PP
   - LEFT
-  - M
-  - DOWN
+  - DOWN ARROW
   - RIGHT
-  - FSLH
+  - ''
+  - ''
   - {t: BASE, h: toggle}
-  - MINUS
-  - EQUAL
+  - ''
+  - ''
   - LGUI
   - {t: ▽, type: trans}
   - SPACE
   - BACKSPACE
   - ''
-  - ENTER
-  - LBKT
-  - RBKT
+  - ''
+  - ''
+  - ''
