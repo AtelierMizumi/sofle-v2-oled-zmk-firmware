@@ -15,7 +15,7 @@ manifest:
     # support nice_oled and nice_epaper
     - name: zmk-nice-oled
       remote: ateliermizumi
-      revision: main
+      revision: feature/oled-peripheral-redesign
     - name: hammerbeam-slideshow
       remote: ateliermizumi
       revision: main
