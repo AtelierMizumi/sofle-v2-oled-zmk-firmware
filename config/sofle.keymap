@@ -13,6 +13,7 @@
 #define SYM 1
 #define NAV 2
 #define ADJUST 3
+#define GAME 4
 
 / {
     conditional_layers {
@@ -41,6 +42,40 @@
             bindings = <&kp ESC>, <&kp GRAVE>;
 
             tapping-term-ms = <200>;
+        };
+
+        // CUSTOM THUMB BEHAVIORS FOR FAST TYPING
+        mt_space: mod_tap_space {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOD_TAP_SPACE";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <150>;
+            bindings = <&kp>, <&kp>;
+        };
+
+        mt_bksp: mod_tap_backspace {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOD_TAP_BACKSPACE";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <150>;
+            bindings = <&kp>, <&kp>;
+        };
+
+        mt_ent: mod_tap_enter {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOD_TAP_ENTER";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <150>;
+            bindings = <&kp>, <&kp>;
         };
     };
 
@@ -84,8 +119,8 @@
 &td_esc    &kp N1  &kp N2     &kp N3     &kp N4    &kp N5                                     &kp N6  &kp N7          &kp N8     &kp N9    &kp N0     &kp DEL
 &kp TAB    &kp Q   &kp W      &kp E      &kp R     &kp T                                      &kp Y   &kp U           &kp I      &kp O     &kp P      &kp BSLH
 &kp LALT   &kp A   &kp S      &kp D      &kp F     &kp G                                      &kp H   &kp J           &kp K      &kp L     &kp SEMI   &kp SQT
-&kp LSHFT  &kp Z   &kp X      &kp C      &kp V     &kp B   &kp C_MUTE    &kp C_PP             &kp N   &kp M           &kp COMMA  &kp DOT   &td_slash  &kp RSHFT
-                   &kp MINUS  &kp EQUAL  &kp LGUI  &mo 1   &kp SPACE     &mt RCTRL BACKSPACE  &mo 2   &mt RALT ENTER  &kp LBKT   &kp RBKT
+&kp LSHFT  &kp Z   &kp X      &kp C      &kp V     &kp B   &kp C_MUTE    &kp C_PP             &kp N   &kp M           &kp COMMA  &kp DOT   &td_slash  &to GAME
+                   &kp MINUS  &kp EQUAL  &kp LGUI  &mo 1   &mt_space LCTRL SPACE &mt_bksp RCTRL BACKSPACE &mo 2 &mt_ent RALT ENTER  &kp LBKT   &kp RBKT
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -126,6 +161,19 @@
 &none              &none            &none            &none            &none            &none            &rgb_ug RGB_TOG    &none  &none   &none  &none  &none  &none  &none
                                     &none            &none            &none            &trans           &none              &none  &trans  &none  &none  &none
             >;
+        };
+
+        game_layer {
+            label = "GAME";
+            bindings = <
+&kp ESC    &kp N1  &kp N2     &kp N3     &kp N4    &kp N5                                     &kp N6  &kp N7          &kp N8     &kp N9    &kp N0     &kp DEL
+&kp TAB    &kp Q   &kp W      &kp E      &kp R     &kp T                                      &kp Y   &kp U           &kp I      &kp O     &kp P      &kp BSLH
+&kp LALT   &kp A   &kp S      &kp D      &kp F     &kp G                                      &kp H   &kp J           &kp K      &kp L     &kp SEMI   &kp SQT
+&kp LSHFT  &kp Z   &kp X      &kp C      &kp V     &kp B   &kp C_MUTE    &kp C_PP             &kp N   &kp M           &kp COMMA  &kp DOT   &kp FSLH   &to BASE
+                   &kp MINUS  &kp EQUAL  &kp LGUI  &kp LALT &kp SPACE    &kp BACKSPACE        &none   &kp ENTER       &kp LBKT   &kp RBKT
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };
