@@ -107,7 +107,7 @@ build_side() {
     fi
     
     # Build
-    if west build -d "$build_dir" -b "$BOARD" zmk/app -- -DSHIELD="$shield" 2>&1; then
+    if west build -d "$build_dir" -b "$BOARD" zmk/app -- -DSHIELD="$shield" -DZMK_CONFIG="$SCRIPT_DIR/config" 2>&1; then
         log_success "Build completed for $side side"
         
         # Copy firmware to output directory
