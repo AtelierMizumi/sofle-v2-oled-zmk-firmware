@@ -17,40 +17,15 @@ img_data = hex_vals[8:]
 
 img_bytes = [int(x, 16) for x in img_data]
 
-# Parse the 128x32 pixels
-pixels = []
-for y in range(32):
-    row_pixels = []
-    for x in range(128):
-        byte_idx = (y * 128 + x) // 8
-        bit_idx = 7 - (x % 8) # LV_IMG_CF_INDEXED_1BIT: MSB is left-most pixel
-        pixel = (img_bytes[byte_idx] >> bit_idx) & 1
-        row_pixels.append(pixel)
-    pixels.append(row_pixels)
+# The original is 128x32
+# We want to crop it to 112x32 (perfectly byte-aligned, 14 bytes per row)
+# This perfectly avoids any bit-shifting artifacts in LVGL!
 
-# Crop to 110x32 (keep x from 0 to 109)
-cropped = []
-for y in range(32):
-    cropped.append(pixels[y][:110])
-
-# Rotate 90 degrees clockwise to make it 32 (W) x 110 (H)
-# Clockwise: new_x = 31 - y, new_y = x
-rotated = [[0]*32 for _ in range(110)]
-for y in range(32):
-    for x in range(110):
-        rotated[x][31 - y] = cropped[y][x]
-
-# Convert back to bytes (Width=32 means 4 bytes per row)
 new_img_bytes = []
-for y in range(110):
-    row_bytes = []
-    for b in range(4): # 4 bytes * 8 bits = 32 bits
-        byte_val = 0
-        for i in range(8):
-            bit = rotated[y][b*8 + i]
-            byte_val |= (bit << (7 - i))
-        row_bytes.append(byte_val)
-    new_img_bytes.extend(row_bytes)
+for row in range(32):
+    row_bytes = img_bytes[row*16 : (row+1)*16]
+    # take the first 14 bytes
+    new_img_bytes.extend(row_bytes[:14])
 
 new_hex_vals = palette + [f"0x{b:02x}" for b in new_img_bytes]
 
@@ -83,8 +58,8 @@ const lv_img_dsc_t hammer_beam_compact = {{
   .header.cf = LV_IMG_CF_INDEXED_1BIT,
   .header.always_zero = 0,
   .header.reserved = 0,
-  .header.w = 32,
-  .header.h = 110,
+  .header.w = 112,
+  .header.h = 32,
   .data_size = {8 + len(new_img_bytes)},
   .data = hammer_beam_compact_map,
 }};
@@ -93,4 +68,4 @@ const lv_img_dsc_t hammer_beam_compact = {{
 with open("zmk-nice-oled/boards/shields/nice_oled/assets/hammer_beam_compact.c", "w") as f:
     f.write(out_c_fixed)
 
-print("Created rotated hammer_beam_compact.c (32x110)")
+print("Created hammer_beam_compact.c (112x32 landscape)")
