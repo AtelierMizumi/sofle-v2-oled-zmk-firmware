@@ -2,7 +2,7 @@ name: Release Firmware
 
 on:
   workflow_run:
-    workflows: ["build.yml"]
+    workflows: ["Build"]
     types: [completed]
     branches: [main, master]
 
