@@ -1,9 +1,67 @@
 layout: {zmk_keyboard: sofle}
 layers:
-  default: ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', BACKSPACE, TAB, Q, W, E, R, T, Y, U, I, O, P, \, ESCAPE, A, S, D, F, G, H, J, K, L, ;, '''', LSHFT,
-    Z, X, C, V, B, MUTE, ESC, N, M, ',', ., /, RSHFT, '-', '=', LEFT ALT, LEFT WIN, LCTRL, SPACE, ENTER, lower, '[', ']']
-  lower:
-  - {t: ▽, type: trans}
+  BASE:
+  - '&td_esc'
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - DEL
+  - TAB
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - \
+  - LALT
+  - A
+  - S
+  - D
+  - F
+  - G
+  - H
+  - J
+  - K
+  - L
+  - ;
+  - ''''
+  - LSHFT
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - MUTE
+  - PP
+  - N
+  - M
+  - ','
+  - .
+  - '&td_slash'
+  - {t: GAME, h: toggle}
+  - '-'
+  - '='
+  - LGUI
+  - SYM
+  - {t: SPACE, h: LCTRL}
+  - {t: BACKSPACE, h: RCTRL}
+  - NAV
+  - {t: ENTER, h: RALT}
+  - '['
+  - ']'
+  SYM:
   - F1
   - F2
   - F3
@@ -15,6 +73,19 @@ layers:
   - F9
   - F10
   - F11
+  - F12
+  - '~'
+  - '!'
+  - '@'
+  - '#'
+  - $
+  - '%'
+  - ^
+  - '&'
+  - '*'
+  - (
+  - )
+  - '|'
   - '`'
   - '1'
   - '2'
@@ -26,33 +97,81 @@ layers:
   - '8'
   - '9'
   - '0'
-  - F12
-  - CAPS
-  - '!'
-  - '@'
-  - '#'
-  - $
-  - '%'
-  - ^
-  - '&'
-  - KP MULTIPLY
-  - (
-  - )
-  - '|'
+  - _
   - {t: ▽, type: trans}
   - '='
   - '-'
-  - KP PLUS
+  - +
   - '{'
   - '}'
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - '['
   - ']'
-  - ;
-  - ':'
-  - \
+  - <
+  - '>'
+  - '?'
   - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  NAV:
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - INS
+  - PSCRN
+  - CMENU
+  - ''
+  - ''
+  - PG UP
+  - HOME
+  - UP
+  - END
+  - ''
+  - ''
+  - ''
+  - LCTRL
+  - LALT
+  - LGUI
+  - LSHFT
+  - ''
+  - PG DN
+  - LEFT
+  - DOWN
+  - RIGHT
+  - DEL
+  - BSPC
+  - {t: ▽, type: trans}
+  - Ctl+Z
+  - Ctl+X
+  - Ctl+C
+  - Ctl+V
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -62,81 +181,21 @@ layers:
   - {t: ▽, type: trans}
   - {type: held}
   - {t: ▽, type: trans}
-  - BT CLR ALL
-  raise:
-  - BT CLR
-  - {t: BT, h: '0'}
-  - {t: BT, h: '1'}
-  - {t: BT, h: '2'}
-  - {t: BT, h: '3'}
-  - {t: BT, h: '4'}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - INS
-  - PSCRN
-  - CMENU
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - PG UP
-  - {t: ▽, type: trans}
-  - UP
-  - {t: ▽, type: trans}
-  - '0'
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - LALT
-  - LCTRL
-  - LSHFT
-  - {t: ▽, type: trans}
-  - CLCK
-  - PG DN
-  - LEFT
-  - DOWN
-  - RIGHT
-  - DEL
-  - BSPC
-  - {t: ▽, type: trans}
-  - UNDO
-  - CUT
-  - COPY
-  - PASTE
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  adjust:
-  - BT CLR
-  - {t: BT, h: '0'}
-  - {t: BT, h: '1'}
-  - {t: BT, h: '2'}
-  - {t: BT, h: '3'}
-  - {t: BT, h: '4'}
+  ADJUST:
   - ''
   - ''
   - ''
   - ''
   - ''
   - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - '&sys_reset'
   - EP TOG
   - RGB HUD
   - RGB HUI
@@ -178,10 +237,132 @@ layers:
   - ''
   - ''
   - ''
-  - ''
-  - ''
+  - {type: held}
   - ''
   - ''
   - {type: held}
+  - ''
+  - ''
+  - ''
+  GAME:
+  - ESC
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - DEL
+  - TAB
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - \
+  - LEFT CONTROL
+  - A
+  - S
+  - D
+  - F
+  - G
+  - H
+  - J
+  - K
+  - L
+  - ;
+  - ''''
+  - LSHFT
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - MUTE
+  - PP
+  - N
+  - M
+  - ','
+  - .
+  - /
+  - {t: FIGHT, h: toggle}
+  - '-'
+  - '='
+  - LGUI
+  - LALT
+  - SPACE
+  - BACKSPACE
+  - ''
+  - ENTER
+  - '['
+  - ']'
+  FIGHT:
+  - ESC
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - DEL
+  - TAB
+  - ''
+  - ''
+  - U
+  - I
+  - O
+  - ''
+  - ''
+  - KP 4
+  - KP 5
+  - KP 6
+  - \
+  - LALT
+  - ''
+  - W
+  - J
+  - K
+  - L
+  - ''
+  - UP
+  - KP 1
+  - KP 2
+  - KP 3
+  - ''''
+  - LSHFT
+  - A
+  - S
+  - D
+  - ''
+  - ''
+  - MUTE
+  - PP
+  - LEFT
+  - DOWN ARROW
+  - RIGHT
+  - ''
+  - ''
+  - {t: BASE, h: toggle}
+  - ''
+  - ''
+  - LGUI
+  - {t: ▽, type: trans}
+  - SPACE
+  - BACKSPACE
+  - ''
+  - ''
   - ''
   - ''
