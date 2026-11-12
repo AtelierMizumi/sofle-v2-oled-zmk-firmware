@@ -1,0 +1,16 @@
+/*
+ * &oled_bg OLED_BG_NEXT / &oled_bg OLED_BG_PREV
+ * Switches the wallpaper on the right-half OLED. See docs/oled-display.md.
+ */
+#include <dt-bindings/sofle/oled_bg.h>
+
+/ {
+    behaviors {
+        // Runs on the peripheral, so ZMK requires the node name to be <= 8 characters.
+        oled_bg: oled_bg {
+            compatible = "sofle,behavior-oled-bg";
+            #binding-cells = <1>;
+            display-name = "OLED wallpaper";
+        };
+    };
+};

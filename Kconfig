@@ -1,0 +1,31 @@
+# Custom OLED screens for this Sofle. See docs/oled-display.md.
+
+config SOFLE_OLED_ART
+    bool "Sofle custom OLED screens (status + signature / animated art)"
+    default y
+    depends on ZMK_DISPLAY && ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    select LV_USE_CANVAS
+    imply ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING if ZMK_SPLIT_ROLE_CENTRAL
+    help
+      Left half: output, both batteries, active layer and a signature.
+      Right half: looping wallpapers with a battery gauge; &oled_bg switches them.
+
+if SOFLE_OLED_ART
+
+config SOFLE_OLED_ART_FLIP
+    bool "Turn the picture upside down"
+    help
+      Enable for a half whose OLED shows the picture upside down
+      (set it in config/sofle_left.conf or config/sofle_right.conf).
+
+config SOFLE_OLED_ART_FRAME_MS
+    int "Milliseconds per animation frame on the right half"
+    default 250
+    range 50 5000
+
+endif
+
+config ZMK_BEHAVIOR_SOFLE_OLED_BG
+    bool
+    default y
+    depends on DT_HAS_SOFLE_BEHAVIOR_OLED_BG_ENABLED

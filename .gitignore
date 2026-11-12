@@ -1,0 +1,4 @@
+firmware/
+tests/host/out/
+tools/oled-art/preview/
+__pycache__/

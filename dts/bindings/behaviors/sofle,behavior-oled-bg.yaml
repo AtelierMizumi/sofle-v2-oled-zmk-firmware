@@ -1,0 +1,5 @@
+description: Switch the wallpaper on the Sofle's right-half OLED
+
+compatible: "sofle,behavior-oled-bg"
+
+include: one_param.yaml

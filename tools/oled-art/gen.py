@@ -1,0 +1,186 @@
+#!/usr/bin/env python3
+"""Generate the C assets for the Sofle OLED screens.
+
+    python3 tools/oled-art/gen.py
+
+Writes src/display/generated/{art_assets.h,art_left.c,art_frames.c}. The output is
+committed, so CI and tools/build-local.sh never need Python or fonts.
+
+Edit here to restyle:
+  LAYERS     names shown on the left screen, in keymap layer order
+  SIGNATURE  the vertical text under the status block (any font PIL can load)
+  scenes/    the wallpapers on the right screen (scenes/__init__.py sets their order)
+"""
+from pathlib import Path
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+
+from scenes import SCENES
+from scenes.common import W, H
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = ROOT / "src" / "display" / "generated"
+
+LAYERS = ["BASE", "SYM", "NAV", "ADJ", "GAME", "FIGHT"]   # must match the #defines in config/sofle.keymap
+SIGNATURE = "水海"
+SIGNATURE_FONT = "/usr/share/fonts/OTF/ipam.ttf"          # IPA Mincho
+SIGNATURE_H = 60                                           # pixels available under the status block
+
+FONT = {  # 5x7
+    "A": [".###.", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
+    "B": ["####.", "#...#", "#...#", "####.", "#...#", "#...#", "####."],
+    "D": ["####.", "#...#", "#...#", "#...#", "#...#", "#...#", "####."],
+    "E": ["#####", "#....", "#....", "####.", "#....", "#....", "#####"],
+    "F": ["#####", "#....", "#....", "####.", "#....", "#....", "#...."],
+    "G": [".###.", "#...#", "#....", "#.###", "#...#", "#...#", ".###."],
+    "H": ["#...#", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
+    "I": ["#####", "..#..", "..#..", "..#..", "..#..", "..#..", "#####"],
+    "J": ["..###", "...#.", "...#.", "...#.", "...#.", "#..#.", ".##.."],
+    "L": ["#....", "#....", "#....", "#....", "#....", "#....", "#####"],
+    "M": ["#...#", "##.##", "#.#.#", "#.#.#", "#...#", "#...#", "#...#"],
+    "N": ["#...#", "##..#", "#.#.#", "#..##", "#...#", "#...#", "#...#"],
+    "R": ["####.", "#...#", "#...#", "####.", "#.#..", "#..#.", "#...#"],
+    "S": [".####", "#....", "#....", ".###.", "....#", "....#", "####."],
+    "T": ["#####", "..#..", "..#..", "..#..", "..#..", "..#..", "..#.."],
+    "U": ["#...#", "#...#", "#...#", "#...#", "#...#", "#...#", ".###."],
+    "V": ["#...#", "#...#", "#...#", "#...#", "#...#", ".#.#.", "..#.."],
+    "Y": ["#...#", "#...#", ".#.#.", "..#..", "..#..", "..#..", "..#.."],
+    "?": [".###.", "#...#", "....#", "...#.", "..#..", ".....", "..#.."],
+    "1": ["..#..", ".##..", "..#..", "..#..", "..#..", "..#..", ".###."],
+    "2": [".###.", "#...#", "....#", "...#.", "..#..", ".#...", "#####"],
+    "3": ["####.", "....#", "....#", ".###.", "....#", "....#", "####."],
+    "4": ["...#.", "..##.", ".#.#.", "#..#.", "#####", "...#.", "...#."],
+    "5": ["#####", "#....", "####.", "....#", "....#", "#...#", ".###."],
+}
+ICONS = {
+    "bt": ["...#...", "...##..", "#..#.#.", ".#.#.#.", "..###..", ".#.#.#.", "#..#.#.", "...##..", "...#..."],
+    "link_on":  [".##.", "####", "####", ".##."],
+    "link_off": [".##.", "#..#", "#..#", ".##."],
+    "cross": ["#...#", ".#.#.", "..#..", ".#.#.", "#...#"],
+}
+
+def rows_to_arr(rows):
+    return np.array([[c == "#" for c in r] for r in rows], np.uint8)
+
+def text(s, yscale=1):
+    """Render a string in the 5x7 font, one column between glyphs."""
+    glyphs = [rows_to_arr(FONT[c]) for c in s]
+    arr = np.zeros((7, len(s) * 6 - 1), np.uint8)
+    for i, g in enumerate(glyphs):
+        arr[:, i * 6:i * 6 + 5] = g
+    return np.repeat(arr, yscale, axis=0)
+
+def signature():
+    """Vertical (tategaki) signature, rasterised large then reduced so strokes keep their weight."""
+    n = len(SIGNATURE)
+    cell = SIGNATURE_H // n
+    size, big = cell - 2, 4
+    font = ImageFont.truetype(SIGNATURE_FONT, size * big)
+    out = np.zeros((SIGNATURE_H, W), np.uint8)
+    for i, ch in enumerate(SIGNATURE):
+        im = Image.new("L", (size * big * 2, size * big * 2), 0)
+        ImageDraw.Draw(im).text((size * big // 2, size * big // 2), ch, font=font, fill=255, stroke_width=2)
+        im = im.crop(im.getbbox())
+        im = im.resize((max(1, round(im.width / big)), max(1, round(im.height / big))), Image.LANCZOS)
+        g = (np.array(im) > 110).astype(np.uint8)[:cell, :W]
+        h, w = g.shape
+        y = i * cell + (cell - h) // 2
+        x = (W - w) // 2
+        out[y:y + h, x:x + w] = g
+    return out
+
+def pack(arr):
+    h, w = arr.shape
+    stride = (w + 7) // 8
+    data = bytearray(stride * h)
+    for y in range(h):
+        for x in range(w):
+            if arr[y, x]:
+                data[y * stride + x // 8] |= 0x80 >> (x % 8)
+    return bytes(data)
+
+def c_bytes(data, indent="    "):
+    lines = []
+    for i in range(0, len(data), 16):
+        lines.append(indent + ", ".join(f"0x{b:02x}" for b in data[i:i + 16]) + ",")
+    return "\n".join(lines)
+
+def main():
+    OUT.mkdir(parents=True, exist_ok=True)
+    banner = "/* Generated by tools/oled-art/gen.py - do not edit by hand. */\n"
+
+    sprites = {}
+    for i, name in enumerate(LAYERS):
+        sprites[f"layer_{i}"] = text(name, yscale=2)
+    sprites["layer_unknown"] = text("?", yscale=2)
+    sprites["usb"] = text("USB")
+    sprites["letter_l"] = text("L")
+    sprites["letter_r"] = text("R")
+    for d in "12345":
+        sprites[f"digit_{d}"] = text(d)
+    for k, rows in ICONS.items():
+        sprites[k] = rows_to_arr(rows)
+    sprites["signature"] = signature()
+
+    scenes = [(sc, sc.frames()) for sc in SCENES]
+    frame_bytes = W // 8 * H
+
+    h = [banner, "#pragma once\n", '#include "fb.h"\n',
+         f"#define ART_LAYER_COUNT {len(LAYERS)}",
+         "#define ART_PROFILE_COUNT 5",
+         f"#define ART_SCENE_COUNT {len(scenes)}",
+         f"#define ART_FRAME_BYTES {frame_bytes}\n",
+         "/* One wallpaper for the right half: a frame loop and its battery gauge icons. */",
+         "struct art_scene {",
+         "    const uint8_t (*frames)[ART_FRAME_BYTES];",
+         "    uint16_t frame_count;",
+         "    struct fb_sprite gauge_on;",
+         "    struct fb_sprite gauge_off;",
+         "};\n"]
+    for name in sprites:
+        if not name.startswith(("layer_", "digit_")) or name == "layer_unknown":
+            h.append(f"extern const struct fb_sprite art_{name};")
+    h += ["", "extern const struct fb_sprite *const art_layers[ART_LAYER_COUNT];",
+          "extern const struct fb_sprite *const art_digits[ART_PROFILE_COUNT];",
+          "extern const struct art_scene art_scenes[ART_SCENE_COUNT];", ""]
+    (OUT / "art_assets.h").write_text("\n".join(h))
+
+    c = [banner, '#include "art_assets.h"\n']
+    for name, arr in sprites.items():
+        hh, ww = arr.shape
+        c.append(f"static const uint8_t {name}_bits[] = {{\n{c_bytes(pack(arr))}\n}};")
+        static = "static " if (name.startswith(("layer_", "digit_")) and name != "layer_unknown") else ""
+        c.append(f"{static}const struct fb_sprite art_{name} = {{.w = {ww}, .h = {hh}, .bits = {name}_bits}};\n")
+    c.append("const struct fb_sprite *const art_layers[ART_LAYER_COUNT] = {\n    "
+             + ", ".join(f"&art_layer_{i}" for i in range(len(LAYERS))) + ",\n};\n")
+    c.append("const struct fb_sprite *const art_digits[ART_PROFILE_COUNT] = {\n    "
+             + ", ".join(f"&art_digit_{d}" for d in "12345") + ",\n};\n")
+    (OUT / "art_left.c").write_text("\n".join(c))
+
+    f = [banner, '#include "art_assets.h"\n']
+    for sc, frames in scenes:
+        n = sc.NAME
+        f.append(f"static const uint8_t {n}_frames[{len(frames)}][ART_FRAME_BYTES] = {{")
+        for i, fr in enumerate(frames):
+            f.append(f"    {{ /* frame {i} */\n{c_bytes(pack((fr == 1).astype(np.uint8)), '        ')}\n    }},")
+        f.append("};")
+        for kind, rows in (("on", sc.GAUGE_ON), ("off", sc.GAUGE_OFF)):
+            f.append(f"static const uint8_t {n}_gauge_{kind}[] = {{\n{c_bytes(pack(rows_to_arr(rows)))}\n}};")
+        f.append("")
+    f.append("const struct art_scene art_scenes[ART_SCENE_COUNT] = {")
+    for sc, frames in scenes:
+        n = sc.NAME
+        gh, gw = rows_to_arr(sc.GAUGE_ON).shape
+        f.append(f"    {{ /* {n} */\n        .frames = {n}_frames,\n        .frame_count = {len(frames)},\n"
+                 f"        .gauge_on = {{.w = {gw}, .h = {gh}, .bits = {n}_gauge_on}},\n"
+                 f"        .gauge_off = {{.w = {gw}, .h = {gh}, .bits = {n}_gauge_off}},\n    }},")
+    f.append("};\n")
+    (OUT / "art_frames.c").write_text("\n".join(f))
+
+    total = sum(len(pack(a)) for a in sprites.values())
+    nframes = sum(len(fr) for _, fr in scenes)
+    print(f"left sprites: {len(sprites)} ({total} bytes); wallpapers: {len(scenes)} "
+          f"({', '.join(sc.NAME for sc, _ in scenes)}), {nframes} frames ({nframes * frame_bytes} bytes)")
+
+if __name__ == "__main__":
+    main()
