@@ -50,7 +50,7 @@ layers:
   - ','
   - .
   - '&td_slash'
-  - {t: GAME, h: toggle}
+  - {t: BASE, h: GAME}
   - '-'
   - '='
   - LGUI
@@ -190,8 +190,8 @@ layers:
   - {t: BT, h: '2'}
   - {t: BT, h: '3'}
   - {t: BT, h: '4'}
-  - ''
-  - ''
+  - '&oled_bg OLED_BG_PREV'
+  - '&oled_bg OLED_BG_NEXT'
   - ''
   - ''
   - ''
@@ -294,7 +294,7 @@ layers:
   - ','
   - .
   - /
-  - {t: FIGHT, h: toggle}
+  - {t: GAME, h: FIGHT}
   - '-'
   - '='
   - LGUI
@@ -355,7 +355,7 @@ layers:
   - RIGHT
   - ''
   - ''
-  - {t: BASE, h: toggle}
+  - {t: FIGHT, h: BASE}
   - ''
   - ''
   - LGUI
